@@ -1,0 +1,24 @@
+{
+    "id": 1,
+    "phone": "5511932249563",
+    "username": "admin",
+    "password": "admin",
+    "contacts": {
+        "5511932249563@c.us": {
+            "phone": "5511932249563",
+            "region": "c.us",
+            "messages": [
+                {
+                    "id": "ED3842665E9F5EC8D7",
+                    "body": "Mensagem aqui",
+                    "timestamp": 1717110693,
+                    "notifyName": "~lfelipe_sj📍",
+                    "type": "chat | sticker | ptt (audio) | image | video",
+                    "durantion": 2,
+                    "hasMediA": true,
+                    "deviceType": "web | android | ios"
+                }
+            ]
+        }
+    }
+}
