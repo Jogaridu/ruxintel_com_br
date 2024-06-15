@@ -74,8 +74,58 @@ module.exports = {
 
         const { message } = req.body;
 
+        try {
 
-        Usuarios.findByIdAndUpdate(id,)
+            if (message._data.type != 'chat') {
+                return res.status(204).send({ status_code: 204 });
+            }
+
+            const remetente = message.from.split('@');
+
+            const mensagem = {
+                "id": message.id.id,
+                "body": message._data.body,
+                "timestamp": message._data.t,
+                "notifyName": message._data.notifyName,
+                "type": message._data.type,
+                "duration": message._data?.duration ?? null,
+                "hasMedia": message.hasMedia,
+                "deviceType": message.deviceType,
+                "score": 8
+            };
+
+            const usuario = await Usuarios.findOneAndUpdate(
+                { _id: id },
+                {
+                    $set: {
+                        [`contacts.${remetente[0]}.phone`]: remetente[0],
+                        [`contacts.${remetente[0]}.region`]: remetente[1]
+                    },
+                    $push: {
+                        [`contacts.${remetente[0]}.messages`]: mensagem
+                    }
+                },
+                { new: true, runValidators: true }
+            );
+
+            if (!usuario) {
+                return res.status(404).send({
+                    message: "Falha ao buscar o usuário",
+                    status_code: 404
+                });
+            }
+
+            return res.status(201).send({
+                message: "Mensagem cadastrada com sucesso",
+                status_code: 201
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao cadastrar mensagem",
+                status_code: 404
+            });
+        }
 
     }
 

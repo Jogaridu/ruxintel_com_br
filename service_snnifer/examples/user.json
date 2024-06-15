@@ -16,7 +16,8 @@
                     "type": "chat | sticker | ptt (audio) | image | video",
                     "durantion": 2,
                     "hasMediA": true,
-                    "deviceType": "web | android | ios"
+                    "deviceType": "web | android | ios",
+                    "score": 7
                 }
             ]
         }

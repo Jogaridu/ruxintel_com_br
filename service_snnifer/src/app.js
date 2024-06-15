@@ -114,23 +114,6 @@ msgteste = {
     links: []
 }
 
-async function snniferMensagens(msg) {
-    const celular_usuario_destino = msg.to.split('@')[0];
 
-    const resposta = await axios.get(`http://localhost:3333/usuario/${celular_usuario_destino}`);
-
-    if (resposta.data.status_code != 200) {
-        // return res.status(404).send({
-        //     message: "Usuário inválido",
-        //     status_code: 404,
-        // });
-    }
-
-    const resposta_mensagem = await axios.post(`http://localhost:3333/usuario/${resposta.data.data._id}/mensagem`, { message: msg });
-
-    console.log(resposta.data.data);
-}
-
-snniferMensagens(msgteste)
 
 module.exports = app;

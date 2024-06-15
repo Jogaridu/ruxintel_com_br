@@ -10,7 +10,7 @@ routes.post("/usuario", controller.cadastrar);
 
 routes.get("/usuario/:celular", controller.buscarPorCelular);
 
-routes.post("/usuario/:id/mensagem", controller.buscarPorCelular);
+routes.post("/usuario/:id/mensagem", controller.cadastrarMensagem);
 
 // routes.get("/filiais", controller.listar);
 

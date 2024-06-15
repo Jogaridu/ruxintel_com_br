@@ -8,7 +8,7 @@ const messageSchema = new Schema({
     timestamp: { type: Number, required: true },
     notifyName: { type: String, required: true },
     type: { type: String, enum: ['chat', 'sticker', 'ptt', 'image', 'video'], required: true },
-    duration: { type: Number, required: true },
+    duration: { type: Number },
     hasMedia: { type: Boolean, required: true },
     deviceType: { type: String, enum: ['web', 'android', 'ios'], required: true }
 }, {
@@ -30,7 +30,8 @@ const userSchema = new Schema({
     phone: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    contacts: { type: Map, of: contactSchema }
+    contacts: { type: Map, of: contactSchema },
+    terms: { type: Boolean }
 }, {
     timestamps: true
 });
