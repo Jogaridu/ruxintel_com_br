@@ -8,13 +8,14 @@ const controller = require("../../controllers/usuario");
 
 routes.post("/usuario", controller.cadastrar);
 
-// routes.get("/filial/:id", controller.buscarPorId);
+routes.get("/usuario/:celular", controller.buscarPorCelular);
+
+routes.post("/usuario/:id/mensagem", controller.buscarPorCelular);
 
 // routes.get("/filiais", controller.listar);
 
 // routes.delete("/filial/:id", autorizacaoMid, controller.deletar);
 
 // routes.put("/filial/:id", autorizacaoMid, controller.atualizar);
-
 
 module.exports = routes;

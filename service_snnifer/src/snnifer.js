@@ -1,5 +1,6 @@
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const axios = require('axios');
 
 const client = new Client({
     webVersionCache: {
@@ -20,12 +21,15 @@ client.on('ready', () => {
 });
 
 // Só pega as mensagens recebidas
-client.on('message', msg => {
-    console.log(msg);
-    console.log(msg.body);
-    // if (msg.body == '!ping') {
-    //     msg.reply('pong');
-    // }
+client.on('message', async msg => {
+    // console.log(msg);
+    // console.log(msg.body);
+    const celular_usuario_destino = msg.to.split('@')[0];
+
+    const resposta = await axios.get(`http://localhost:3333/usuario/${celular_usuario_destino}`);
+
+    console.log(resposta.body.data);
+
 });
 
 client.initialize();
