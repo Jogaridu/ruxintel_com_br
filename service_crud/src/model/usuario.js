@@ -10,7 +10,8 @@ const messageSchema = new Schema({
     type: { type: String, enum: ['chat', 'sticker', 'ptt', 'image', 'video'], required: true },
     duration: { type: Number },
     hasMedia: { type: Boolean, required: true },
-    deviceType: { type: String, enum: ['web', 'android', 'ios'], required: true }
+    deviceType: { type: String, enum: ['web', 'android', 'ios'], required: true },
+    score: { type: Number }
 }, {
     _id: false
 });

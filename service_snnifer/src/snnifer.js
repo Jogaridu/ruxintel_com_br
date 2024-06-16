@@ -1,7 +1,6 @@
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
-const openai = require('openai');
 
 const client = new Client({
     webVersionCache: {
@@ -27,6 +26,7 @@ async function snniferMensagens(msg) {
 
     try {
 
+        // Validação se o usuário existe no banco
         const resposta = await axios.get(`http://localhost:3333/usuario/${celular_usuario_destino}`);
 
         // TODO: Validar se o subprocesso deve ser encerrado
@@ -43,16 +43,19 @@ async function snniferMensagens(msg) {
             "contatoNumero": msg._data.from,
         }
 
+        // Envio de mensagem para análise de inteligência
         const resposta_inteligencia = await axios.post(`http://localhost:4444/analise-mensagem`, dados_analise);
-
-        if (resposta_inteligencia.status_code != 200) {
+        console.log(resposta_inteligencia);
+        if (resposta_inteligencia.data.status_code != 200) {
             return false;
         }
 
+        // Salvando dados do SCORE
         msg.fraudeScore = resposta_inteligencia.data.data.fraudeScore;
         msg.fraudePorcentagem = resposta_inteligencia.data.data.fraudePorcentagem;
 
-        const resposta_mensagem = await axios.post(`http://localhost:3333/usuario/${resposta.data.data.usuario._id}/mensagem`, { message: msg });
+        // Cadastro de mensagem no banco
+        await axios.post(`http://localhost:3333/usuario/${resposta.data.data.usuario._id}/mensagem`, { message: msg });
 
     } catch (error) {
         console.log(error);

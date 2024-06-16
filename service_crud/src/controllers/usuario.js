@@ -91,9 +91,9 @@ module.exports = {
                 "duration": message._data?.duration ?? null,
                 "hasMedia": message.hasMedia,
                 "deviceType": message.deviceType,
-                "score": 8
+                "score": message.fraudeScore
             };
-
+            console.log(mensagem);
             const usuario = await Usuarios.findOneAndUpdate(
                 { _id: id },
                 {
@@ -119,6 +119,7 @@ module.exports = {
                 message: "Mensagem cadastrada com sucesso",
                 status_code: 201
             });
+
         } catch (error) {
             console.log(error);
             return res.status(404).send({
