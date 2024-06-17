@@ -32,7 +32,8 @@ const userSchema = new Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     contacts: { type: Map, of: contactSchema },
-    terms: { type: Boolean }
+    terms: { type: Boolean },
+    messagesCritical: [messageSchema]
 }, {
     timestamps: true
 });

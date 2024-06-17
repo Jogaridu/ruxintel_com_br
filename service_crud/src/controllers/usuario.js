@@ -93,18 +93,25 @@ module.exports = {
                 "deviceType": message.deviceType,
                 "score": message.fraudeScore
             };
+
+            let updateConfig = {
+                $set: {
+                    [`contacts.${remetente[0]}.phone`]: remetente[0],
+                    [`contacts.${remetente[0]}.region`]: remetente[1]
+                },
+                $push: {
+                    [`contacts.${remetente[0]}.messages`]: mensagem
+                }
+            };
+
+            if (mensagem.score >= 6) {
+                updateConfig.$push.messagesCritical = mensagem;
+            }
             console.log(mensagem);
+
             const usuario = await Usuarios.findOneAndUpdate(
                 { _id: id },
-                {
-                    $set: {
-                        [`contacts.${remetente[0]}.phone`]: remetente[0],
-                        [`contacts.${remetente[0]}.region`]: remetente[1]
-                    },
-                    $push: {
-                        [`contacts.${remetente[0]}.messages`]: mensagem
-                    }
-                },
+                updateConfig,
                 { new: true, runValidators: true }
             );
 
