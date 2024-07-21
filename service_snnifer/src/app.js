@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const axios = require('axios');
+const initSnnifer = require("./snnifer");
 
 const app = express();
 
@@ -9,6 +9,28 @@ app.use(cors());
 
 const routes = express.Router();
 
-// routes.post("/qrcode/novo", controller.cadastrar);
+routes.post("/iniciar-snnifer", async (req, res) => {
 
-module.exports = app;
+    try {
+        await initSnnifer();
+        return res.status(201).send({
+            message: "Sessão iniciada com sucesso",
+            status_code: 200,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(404).send({
+            message: "Falha ao iniciar a sessão o usuário",
+            status_code: 404
+        });
+    }
+
+});
+
+app.use(routes);
+const PORT = process.env.PORT || 5555;
+
+app.listen(PORT, () => {
+    console.log("Servidor rodando na porta " + PORT);
+});
