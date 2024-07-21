@@ -135,6 +135,33 @@ module.exports = {
             });
         }
 
+    },
+
+    async validarInstancia(req, res) {
+
+        const usuario = await Usuarios.findById(req.id);
+
+        if (!usuario) {
+            return res.status(404).send({
+                message: "Usuário inválido",
+                status_code: 404,
+            });
+        }
+
+        if (!usuario.status_instance) {
+            return res.status(404).send({
+                message: "Instância INATIVA",
+                status_code: 404,
+                data: { status_instance: false }
+            });
+        }
+
+        return res.status(404).send({
+            message: "Instância ATIVA",
+            status_code: 404,
+            data: { status_instance: true }
+        });
+
     }
 
 }

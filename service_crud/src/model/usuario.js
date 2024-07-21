@@ -33,6 +33,7 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     contacts: { type: Map, of: contactSchema },
     terms: { type: Boolean },
+    status_instance: { type: Boolean, required: false },
     messagesCritical: [messageSchema]
 }, {
     timestamps: true
