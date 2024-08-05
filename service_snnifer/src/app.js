@@ -9,10 +9,14 @@ app.use(cors());
 
 const routes = express.Router();
 
-routes.post("/iniciar-snnifer", async (req, res) => {
+const autorizacaoMid = require("./middlewares/autorizacao");
+
+routes.post("/iniciar-snnifer", autorizacaoMid, async (req, res) => {
 
     try {
-        await initSnnifer();
+
+        await initSnnifer(req.id);
+
         return res.status(201).send({
             message: "Sessão iniciada com sucesso",
             status_code: 200,

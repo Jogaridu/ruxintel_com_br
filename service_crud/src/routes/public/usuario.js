@@ -10,5 +10,7 @@ routes.get("/usuario/:celular", controller.buscarPorCelular);
 
 // SERVIÇO DE SNNIFER UTILIZA
 routes.post("/usuario/:id/mensagem", controller.cadastrarMensagem);
+routes.post("/usuario/:id/qrcode", controller.cadastrarQrcode);
+routes.post("/usuario/:id/iniciar-instancia", controller.iniciarInstancia);
 
 module.exports = routes;

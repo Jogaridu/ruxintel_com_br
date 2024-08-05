@@ -68,6 +68,7 @@ module.exports = {
 
     },
 
+    // SNNIFER
     async cadastrarMensagem(req, res) {
 
         const { id } = req.params;
@@ -137,6 +138,43 @@ module.exports = {
 
     },
 
+    async cadastrarQrcode(req, res) {
+
+        const { id } = req.params;
+
+        const { image } = req.body;
+
+        try {
+
+            const usuario = await Usuarios.findOneAndUpdate(
+                { _id: id },
+                updateConfig,
+                { new: true, runValidators: true }
+            );
+
+            if (!usuario) {
+                return res.status(404).send({
+                    message: "Falha ao buscar o usuário",
+                    status_code: 404
+                });
+            }
+
+            return res.status(201).send({
+                message: "Mensagem cadastrada com sucesso",
+                status_code: 201
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao cadastrar mensagem",
+                status_code: 404
+            });
+        }
+
+    },
+
+    // INSTANCIAS
     async validarInstancia(req, res) {
 
         const usuario = await Usuarios.findById(req.id);
@@ -148,19 +186,46 @@ module.exports = {
             });
         }
 
-        if (!usuario.status_instance) {
+        if (!usuario.statusInstance) {
             return res.status(404).send({
                 message: "Instância INATIVA",
                 status_code: 404,
-                data: { status_instance: false }
+                data: { statusInstance: false }
             });
         }
 
         return res.status(404).send({
             message: "Instância ATIVA",
             status_code: 404,
-            data: { status_instance: true }
+            data: { statusInstance: true }
         });
+
+    },
+
+    async iniciarInstancia(req, res) {
+
+        const { id } = req.params;
+
+        try {
+
+            await Usuarios.findOneAndUpdate(
+                { _id: id },
+                { statusInstance: true },
+                { new: true, runValidators: true }
+            );
+
+            return res.status(200).send({
+                message: "Instância inciada",
+                status_code: 200
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao iniciar",
+                status_code: 404
+            });
+        }
 
     }
 
