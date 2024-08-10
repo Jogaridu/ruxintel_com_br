@@ -23,7 +23,6 @@ routes.post("/iniciar-snnifer", autorizacaoMid, async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
         return res.status(404).send({
             message: "Falha ao iniciar a sessão o usuário",
             status_code: 404

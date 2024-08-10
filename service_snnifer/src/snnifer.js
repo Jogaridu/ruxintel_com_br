@@ -12,10 +12,13 @@ function initSnnifer(id) {
     client.on('qr', async (qr) => {
         try {
 
-            await axios.post(`http://localhost:3333/usuario/${id}/inserir-qrcode`, {
-                tokenQrcode: qr
-            });
-            console.log('Token QRCODE:', qr);
+            if (qr != '') {
+                await axios.post(`http://localhost:3333/usuario/${id}/inserir-qrcode`, {
+                    tokenQrcode: qr
+                });
+                console.log('Token QRCODE:', qr);
+            }
+
         } catch (err) {
             console.error('Erro ao cadastrar o TOKEN QRCODE:', err);
         }
