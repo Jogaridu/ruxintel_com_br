@@ -31,6 +31,7 @@ const userSchema = new Schema({
     phone: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    tokenQrcode: { type: String, required: false },
     contacts: { type: Map, of: contactSchema },
     terms: { type: Boolean },
     statusInstance: { type: Boolean, required: false },

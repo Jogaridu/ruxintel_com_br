@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../config/auth.json");
 const Usuarios = require("../model/usuario");
+const QRCode = require('qrcode');
 
 module.exports = {
 
@@ -138,40 +139,31 @@ module.exports = {
 
     },
 
-    async cadastrarQrcode(req, res) {
+    async inserirQrcode(req, res) {
 
         const { id } = req.params;
-
-        const { image } = req.body;
+        const { tokenQrcode } = req.body;
 
         try {
 
-            const usuario = await Usuarios.findOneAndUpdate(
+            await Usuarios.findOneAndUpdate(
                 { _id: id },
-                updateConfig,
+                { tokenQrcode },
                 { new: true, runValidators: true }
             );
 
-            if (!usuario) {
-                return res.status(404).send({
-                    message: "Falha ao buscar o usuário",
-                    status_code: 404
-                });
-            }
-
-            return res.status(201).send({
-                message: "Mensagem cadastrada com sucesso",
-                status_code: 201
+            return res.status(200).send({
+                message: "Atualizado com sucesso",
+                status_code: 200
             });
 
         } catch (error) {
             console.log(error);
             return res.status(404).send({
-                message: "Falha ao cadastrar mensagem",
+                message: "Falha ao atualizar",
                 status_code: 404
             });
         }
-
     },
 
     // INSTANCIAS
@@ -187,17 +179,30 @@ module.exports = {
         }
 
         if (!usuario.statusInstance) {
-            return res.status(200).send({
-                message: "Instância INATIVA",
-                status_code: 200,
-                data: { statusInstance: false }
-            });
+
+            if (usuario.tokenQrcode != '') {
+
+                const base64 = await QRCode.toDataURL(usuario.tokenQrcode, {
+                    color: { dark: '#000000', light: '#ffffff' }
+                });
+                return res.status(200).send({
+                    message: "Instância PENDENTE de conexão",
+                    status_code: 200,
+                    data: { statusInstance: false, imagem: base64 }
+                });
+            } else {
+                return res.status(200).send({
+                    message: "Instância INATIVA",
+                    status_code: 200,
+                    data: { statusInstance: false }
+                });
+            }
         }
 
         return res.status(200).send({
             message: "Instância ATIVA",
             status_code: 200,
-            data: { statusInstance: true }
+            data: { statusInstance: true, qrcode: usuario.tokenQrcode }
         });
 
     },
@@ -210,7 +215,7 @@ module.exports = {
 
             await Usuarios.findOneAndUpdate(
                 { _id: id },
-                { statusInstance: true },
+                { statusInstance: true, tokenQrcode },
                 { new: true, runValidators: true }
             );
 
@@ -237,7 +242,7 @@ module.exports = {
 
             await Usuarios.findOneAndUpdate(
                 { _id: id },
-                { statusInstance: false },
+                { statusInstance: false, tokenQrcode: '' },
                 { new: true, runValidators: true }
             );
 

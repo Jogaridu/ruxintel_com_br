@@ -1,5 +1,5 @@
 const { Client } = require('whatsapp-web.js');
-const QRCode = require('qrcode');
+
 const axios = require('axios');
 
 function initSnnifer(id) {
@@ -11,12 +11,13 @@ function initSnnifer(id) {
 
     client.on('qr', async (qr) => {
         try {
-            const base64 = await QRCode.toDataURL(qr, {
-                color: { dark: '#000000', light: '#ffffff' }
+
+            await axios.post(`http://localhost:3333/usuario/${id}/inserir-qrcode`, {
+                tokenQrcode: qr
             });
-            console.log('QR code em Base64:', base64);
+            console.log('Token QRCODE:', qr);
         } catch (err) {
-            console.error('Erro ao gerar o QR code:', err);
+            console.error('Erro ao cadastrar o TOKEN QRCODE:', err);
         }
     });
 
