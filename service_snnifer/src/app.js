@@ -15,7 +15,7 @@ routes.post("/iniciar-snnifer", autorizacaoMid, async (req, res) => {
 
     try {
 
-        await initSnnifer(req.id);
+        initSnnifer(req.id);
 
         return res.status(201).send({
             message: "Sessão iniciada com sucesso",

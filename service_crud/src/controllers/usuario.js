@@ -187,16 +187,16 @@ module.exports = {
         }
 
         if (!usuario.statusInstance) {
-            return res.status(404).send({
+            return res.status(200).send({
                 message: "Instância INATIVA",
-                status_code: 404,
+                status_code: 200,
                 data: { statusInstance: false }
             });
         }
 
-        return res.status(404).send({
+        return res.status(200).send({
             message: "Instância ATIVA",
-            status_code: 404,
+            status_code: 200,
             data: { statusInstance: true }
         });
 
@@ -215,7 +215,34 @@ module.exports = {
             );
 
             return res.status(200).send({
-                message: "Instância inciada",
+                message: "Instância iniciada",
+                status_code: 200
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao iniciar",
+                status_code: 404
+            });
+        }
+
+    },
+
+    async encerrarInstancia(req, res) {
+
+        const { id } = req.params;
+
+        try {
+
+            await Usuarios.findOneAndUpdate(
+                { _id: id },
+                { statusInstance: false },
+                { new: true, runValidators: true }
+            );
+
+            return res.status(200).send({
+                message: "Instância encerrada",
                 status_code: 200
             });
 

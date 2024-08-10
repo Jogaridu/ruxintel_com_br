@@ -2,31 +2,48 @@ const { Client } = require('whatsapp-web.js');
 const QRCode = require('qrcode');
 const axios = require('axios');
 
-function initSnnifer() {
+function initSnnifer(id) {
 
     const client = new Client({
-
+        qrMaxRetries: 2,
+        authTimeout: 120000
     });
 
     client.on('qr', async (qr) => {
-
         try {
-            console.log(qr);
             const base64 = await QRCode.toDataURL(qr, {
                 color: { dark: '#000000', light: '#ffffff' }
             });
             console.log('QR code em Base64:', base64);
-
         } catch (err) {
             console.error('Erro ao gerar o QR code:', err);
         }
-
     });
 
-    client.on('ready', (config) => {
-        console.log('[DEBUG] Cliente se conectou ao \"Cliente Personalizado\".');
-        console.log(config);
+    client.on('ready', async () => {
+        console.log('[DEBUG] Cliente se CONECTOU ao \"Cliente Personalizado\".');
+        try {
+            await axios.post(`http://localhost:3333/usuario/${id}/iniciar-instancia`);
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao iniciar a sessão o usuário",
+                status_code: 404
+            });
+        }
+    });
 
+    client.on('disconnected', async () => {
+        console.log('[DEBUG] Cliente se DESCONECTOU ao \"Cliente Personalizado\".');
+        try {
+            await axios.post(`http://localhost:3333/usuario/${id}/encerrar-instancia`);
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao iniciar a sessão o usuário",
+                status_code: 404
+            });
+        }
     });
 
     async function snniferMensagens(msg) {
@@ -80,4 +97,3 @@ function initSnnifer() {
 }
 
 module.exports = initSnnifer;
-initSnnifer()
