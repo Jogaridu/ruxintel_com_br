@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const initSnnifer = require("./snnifer");
+const initDocker = require("./../docker");
 
 const app = express();
 
@@ -15,7 +15,7 @@ routes.post("/iniciar-snnifer", autorizacaoMid, async (req, res) => {
 
     try {
 
-        initSnnifer(req.id);
+        initDocker(req.id);
 
         return res.status(201).send({
             message: "Sessão iniciada com sucesso",

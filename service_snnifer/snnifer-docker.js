@@ -1,12 +1,16 @@
 const { Client } = require('whatsapp-web.js');
 
 const axios = require('axios');
+const URL_SERVICE_CRUD = 'http://192.168.0.21:3333';
+const URL_SERVICE_INTELLIGENCE = 'http://192.168.0.21:4444';
 
-function initSnnifer(id) {
+function initSnnifer() {
+
+    var id = process.env.USER_ID;
 
     const client = new Client({
-        qrMaxRetries: 2,
-        authTimeout: 120000
+        qrMaxRetries: 10,
+        authTimeout: 240000
     });
 
     client.on('qr', async (qr) => {
@@ -16,41 +20,32 @@ function initSnnifer(id) {
             // encFilehash: '+w9Db2vgzOc05C1k8IKFIOD9J5jT3lpFHYmfvrNEGKM=',
             // size: 139213,
             if (qr != '') {
-                await axios.post(`http://localhost:3333/usuario/${id}/inserir-qrcode`, {
+                await axios.post(`${URL_SERVICE_CRUD}/usuario/${id}/inserir-qrcode`, {
                     tokenQrcode: qr
                 });
                 console.log('Token QRCODE:', qr);
-                console.log('ID', id);
             }
 
         } catch (err) {
-            // console.error('Erro ao cadastrar o TOKEN QRCODE:', err);
+            console.log("[DEBUG] EVENT QR - Falha ao salvar o QRCODE");
         }
     });
 
     client.on('ready', async () => {
         console.log('[DEBUG] Cliente se CONECTOU ao \"Cliente Personalizado\".');
         try {
-            await axios.post(`http://localhost:3333/usuario/${id}/iniciar-instancia`);
+            await axios.post(`${URL_SERVICE_CRUD}/usuario/${id}/iniciar-instancia`);
         } catch (error) {
-            // console.log(error);
-            return res.status(404).send({
-                message: "Falha ao iniciar a sessão o usuário",
-                status_code: 404
-            });
+            console.log("[DEBUG] EVENT READY - Falha ao salvar início da sessão do usuário");
         }
     });
 
     client.on('disconnected', async () => {
         console.log('[DEBUG] Cliente se DESCONECTOU ao \"Cliente Personalizado\".');
         try {
-            await axios.post(`http://localhost:3333/usuario/${id}/encerrar-instancia`);
+            await axios.post(`${URL_SERVICE_CRUD}/usuario/${id}/encerrar-instancia`);
         } catch (error) {
-            // console.log(error);
-            return res.status(404).send({
-                message: "Falha ao iniciar a sessão o usuário",
-                status_code: 404
-            });
+            console.log("[DEBUG] EVENT DISCONNECTED - Falha ao encerrar a sessão o usuário");
         }
     });
 
@@ -61,27 +56,18 @@ function initSnnifer(id) {
         try {
 
             // Validação se o usuário existe no banco
-            const resposta = await axios.get(`http://localhost:3333/usuario/${celular_usuario_destino}`);
-
-            // TODO: Validar se o subprocesso deve ser encerrado
-            if (resposta.data.status_code != 200) {
-                return false;
-                // return res.status(404).send({
-                //     message: "Usuário inválido",
-                //     status_code: 404,
-                // });
-            }
+            const resposta = await axios.get(`${URL_SERVICE_CRUD}/usuario/${celular_usuario_destino}`);
 
             const dados_analise = {
                 "contatoMensagem": msg._data.body,
                 "contatoNumero": msg._data.from,
             }
-            console.log(msg);
+
             // Envio de mensagem para análise de inteligência
-            const resposta_inteligencia = await axios.post(`http://localhost:4444/analise-mensagem`, dados_analise);
+            const resposta_inteligencia = await axios.post(`${URL_SERVICE_INTELLIGENCE}/analise-mensagem`, dados_analise);
 
             if (resposta_inteligencia.data.status_code != 200) {
-                return false;
+                //TODO: Avaliar lógica para disparar aviso caso a inteligência não funcione
             }
 
             // Salvando dados do SCORE
@@ -89,10 +75,10 @@ function initSnnifer(id) {
             msg.fraudePorcentagem = resposta_inteligencia.data.data.fraudePorcentagem;
 
             // Cadastro de mensagem no banco
-            await axios.post(`http://localhost:3333/usuario/${resposta.data.data.usuario._id}/mensagem`, { message: msg });
+            await axios.post(`${URL_SERVICE_CRUD}/usuario/${resposta.data.data.usuario._id}/mensagem`, { message: msg });
 
         } catch (error) {
-            // console.log(error);
+            console.log("[DEBUG] EVENT MESSAGE - Falha ao analisar mensagem recebida");
         }
 
     }
@@ -104,4 +90,5 @@ function initSnnifer(id) {
 
 }
 
-module.exports = initSnnifer;
+initSnnifer();
+console.log('SERVIÇO INICIANDO...');
