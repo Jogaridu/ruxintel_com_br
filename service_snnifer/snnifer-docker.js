@@ -10,7 +10,7 @@ function initSnnifer() {
     var id = process.env.USER_ID;
 
     const client = new Client({
-        qrMaxRetries: 10,
+        qrMaxRetries: 20,
         authTimeout: 240000
     });
 
