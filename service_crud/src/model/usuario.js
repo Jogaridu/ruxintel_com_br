@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment-timezone');
 const Schema = mongoose.Schema;
 
 // Definir o esquema do usuário
@@ -37,7 +38,9 @@ const userSchema = new Schema({
     statusInstance: { type: Boolean, required: false },
     messagesCritical: [messageSchema]
 }, {
-    timestamps: true
+    timestamps: {
+        currentTime: () => moment().tz('America/Sao_Paulo').format()
+    }
 });
 
 
