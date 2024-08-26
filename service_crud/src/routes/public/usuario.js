@@ -13,5 +13,6 @@ routes.post("/usuario/:id/mensagem", controller.cadastrarMensagem);
 routes.post("/usuario/:id/iniciar-instancia", controller.iniciarInstancia);
 routes.post("/usuario/:id/encerrar-instancia", controller.encerrarInstancia);
 routes.post("/usuario/:id/inserir-qrcode", controller.inserirQrcode);
+routes.get("/usuario/:id/validar-instancia", controller.validarInstancia);
 
 module.exports = routes;

@@ -2,67 +2,78 @@ const Docker = require('dockerode');
 
 const docker = new Docker({ host: 'http://localhost', port: 2375 });
 
-async function initDocker(userId) {
+function generateNameContainer(userId) {
+    return `U${userId}`
+}
 
-    const name = `U${userId}`;
+module.exports = {
 
-    try {
-        // Constrói a imagem a partir do Dockerfile
-        const stream = await docker.buildImage({
-            context: __dirname,
-            src: ['Dockerfile', 'snnifer-docker.js', 'package.json']
-        }, { t: 'image_docker_snnifer2' });
+    async initDocker(userId) {
 
-        await new Promise((resolve, reject) => {
-            docker.modem.followProgress(stream, (err, res) => err ? reject(err) : resolve(res));
-        });
+        const name = generateNameContainer(userId);
 
-        console.log('Imagem construída com sucesso.');
+        try {
 
-        const images = await docker.listImages();
-        const imageExists = images.some(image => image.RepoTags.includes('image_docker_snnifer2:latest'));
+            const stream = await docker.buildImage({
+                context: __dirname,
+                src: ['Dockerfile', 'snnifer-docker.js', 'package.json']
+            }, { t: 'image_docker_snnifer2' });
 
-        if (!imageExists) {
-            throw new Error('Imagem não encontrada após a construção.');
+            await new Promise((resolve, reject) => {
+                docker.modem.followProgress(stream, (err, res) => err ? reject(err) : resolve(res));
+            });
+
+            console.log('Imagem construída com sucesso.');
+
+            const images = await docker.listImages();
+            const imageExists = images.some(image => image.RepoTags.includes('image_docker_snnifer2:latest'));
+
+            if (!imageExists) {
+                throw new Error('Imagem não encontrada após a construção.');
+            }
+
+            const container = await docker.createContainer({
+                Image: 'image_docker_snnifer2',
+                name,
+                Env: [`USER_ID=${userId}`],
+                Tty: true,
+            });
+
+            await container.start();
+
+        } catch (error) {
+
+            if (error.statusCode === 409) {
+                const existingContainer = docker.getContainer(name);
+                await existingContainer.restart();
+            } else {
+                throw error;
+            }
+
         }
+    },
 
-        const container = await docker.createContainer({
-            Image: 'image_docker_snnifer2',
-            name,
-            Env: [`USER_ID=${userId}`],
-            Tty: true,
-        });
-
-        await container.start();
-
-        console.log(name);
-        // salvar nome do container no usuario
-    } catch (error) {
-
-        if (error.statusCode === 409) {
-
-            const existingContainer = docker.getContainer(name);
-            await existingContainer.restart();
-
-        } else {
-
-            throw error;
+    async isContainerRunning(userId) {
+        try {
+            const container = docker.getContainer(generateNameContainer(userId));
+            const data = await container.inspect();
+            return data.State.Running;
+        } catch (error) {
+            return false;
         }
     }
 }
 
-module.exports = initDocker
-
 // fazer lógica com docker - CONCLUIDO
+// integrar arquivo docker com API oficial - CONCLUIDO
+// melhorar "validar instancia" para validar se o container está de pé - CONCLUIDO
+// avaliar para nao buildar toda vez, talvez de pra usar uma imagem apenas - CONCLUIDO
+// caso não, alterar o status e encerrar a sessão do qrcode do usuario no front - CONCLUIDO
+// melhorar trativas de erro nas apis - CONCLUIDO
 
 // PRÓXIMAS ATIVIDADES
-// integrar arquivo docker com API oficial
-// melhorar "validar instancia" para validar se o container está de pé
-// avaliar para nao buildar toda vez, talvez de pra usar uma imagem apenas
-// caso não, alterar o status e encerrar a sessão do qrcode do usuario no front
 // testar com mais um usuario simultaneo
-
 // salvar dados extras de midia
-// melhorar trativas de erro nas apis
-
 // hospedar na aws
+
+

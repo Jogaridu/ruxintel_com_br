@@ -169,7 +169,8 @@ module.exports = {
     // INSTANCIAS
     async validarInstancia(req, res) {
 
-        const usuario = await Usuarios.findById(req.id);
+        const { id } = req.params;
+        const usuario = await Usuarios.findById(id);
 
         if (!usuario) {
             return res.status(404).send({
@@ -185,11 +186,13 @@ module.exports = {
                 const base64 = await QRCode.toDataURL(usuario.tokenQrcode, {
                     color: { dark: '#000000', light: '#ffffff' }
                 });
+
                 return res.status(200).send({
                     message: "Instância PENDENTE de conexão",
                     status_code: 200,
                     data: { statusInstance: false, imagem: base64 }
                 });
+
             } else {
                 return res.status(200).send({
                     message: "Instância INATIVA",
@@ -225,7 +228,6 @@ module.exports = {
             });
 
         } catch (error) {
-            console.log(error);
             return res.status(404).send({
                 message: "Falha ao iniciar",
                 status_code: 404
@@ -252,7 +254,6 @@ module.exports = {
             });
 
         } catch (error) {
-            console.log(error);
             return res.status(404).send({
                 message: "Falha ao iniciar",
                 status_code: 404
