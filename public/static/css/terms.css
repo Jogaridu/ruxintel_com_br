@@ -1,0 +1,46 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+.terms {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.terms-content {
+    background-color: var(--main-gray);
+    height: 200px;
+    overflow-y: scroll;
+
+    padding: 30px;
+    border-radius: 30px; /* 30px 0 0 30px */
+}
+
+.terms-content p {
+    color: var(--main-white);
+
+    font-weight: 100;
+}
+
+.term-checkbox {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.term-checkbox #checkbox {
+    cursor: pointer;
+
+    width: 20px;
+    height: 20px;
+}
+
+.term-checkbox span {
+    color: var(--main-white);
+
+    font-weight: 100;
+    letter-spacing: 2.5px;
+}

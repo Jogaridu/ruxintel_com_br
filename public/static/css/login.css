@@ -1,0 +1,112 @@
+* {
+    padding: 0;
+    margin: 0;
+
+    font-family: 'Karla', sans-serif;
+}
+
+.login {
+    overflow: hidden;
+
+    display: flex; 
+    flex-direction: row;
+}
+
+.banner {
+    width: 50%;
+    height: 100vh;
+
+    background: linear-gradient(to bottom, var(--main-cyan), var(--main-green));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner p {
+    margin: 40px;
+
+    font-size: 35px;
+    letter-spacing: 10%;
+}
+
+.banner p strong {
+    font-weight: 800;
+}
+
+.login-form {
+    width: 50%;
+    height: 100vh;
+
+    background: var(--main-black);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form form {
+    width: 240px;
+    padding: 60px;
+
+    border: 2px solid var(--main-green);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 40px;
+    gap: 20px;
+}
+
+.login-form form img {
+    max-width: 100px;
+}
+
+.login-form-input {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    color: var(--main-white);
+}
+
+.login-form-input input {
+    height: 30px;
+    background: transparent;
+
+    padding: 0 15px;
+
+    border: 1px solid var(--main-green);
+    border-radius: 60px;
+    outline: none;
+
+    color: var(--main-green);
+}
+
+.login-form .button-default {
+    width: 100%;
+}
+
+.login-form p {
+    color: var(--main-white);
+}
+
+.login-form p a {
+    cursor: pointer;
+    text-decoration: none;
+
+    color: var(--main-cyan);
+    font-weight: 700;
+
+    transition: 0.4s;
+}
+
+.login-form p a:hover {
+    transition: 0.4s;
+
+    opacity: 50%;
+}

@@ -1,0 +1,33 @@
+.connect {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 40px;
+}
+
+.qrcode-container {
+    width: 200px;
+    height: 200px;
+
+    background-color: var(--main-gray);
+    border: 6px solid var(--main-green);
+}
+
+.qrcode-container img {
+    max-width: 100%;
+}
+
+.connect ul {
+    list-style: decimal;
+}
+
+.connect ul li {
+    color: var(--main-white);
+    
+    font-size: 18px;
+    font-weight: 200;
+}

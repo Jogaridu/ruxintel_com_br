@@ -1,0 +1,88 @@
+/* navbar */
+.navbar {
+    z-index: 99;
+
+    background-color: var(--main-gray);
+
+    width: 100px; height: auto;
+
+    padding: 40px 0;
+    border-radius: 0 50px 50px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar ul {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 40px;
+}
+
+.navbar a {
+    color: var(--second-gray);
+    text-decoration: none;
+}
+
+.navbar ul li {
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 5px;
+
+    transition: 0.4s;
+}
+
+.navbar ul li:hover {
+    color: var(--main-green);
+
+    transition: 0.4s;
+}
+
+.navbar ul li i {
+    font-size: 40px;
+}
+
+.navbar ul #home {
+    background: linear-gradient(to right, var(--main-green), var(--main-cyan));
+    color: var(--main-gray);
+
+    width: 100px;
+    height: 100px;
+    
+    margin: 0 0 0 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+.navbar ul #home:hover {
+    transform: scale(1.15);
+    transition: 0.4s;
+}
+
+.navbar ul #home i {
+    font-size: 70px
+}
+
+.navbar ul li span {
+    font-size: 10px;
+    text-transform: uppercase;
+}

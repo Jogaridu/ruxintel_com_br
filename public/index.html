@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruxintel - Login</title>
+
+    <link rel="stylesheet" href="static/css/colors.css">
+    <link rel="stylesheet" href="static/css/components/button.css">
+    <link rel="stylesheet" href="static/css/login.css">
+
+    <link rel="icon" href="static/img/icon.png" type="image/x-icon">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <main class="login">
+        <div class="banner">
+            <p>A <strong>melhor plataforma</strong> contra <br> fraudes de contato direto. <br> <strong>Proteja-se</strong> com a <strong>Ruxintel</strong>.</p>
+        </div>
+        <div class="login-form">
+            <form id="loginForm">
+                <img src="static/img/logo.png" alt="">
+                <div class="login-form-input">
+                    <label><i class='bx bx-user'></i> Usuário</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                <div class="login-form-input">
+                    <label><i class='bx bxs-key'></i> Senha</label>
+                    <input type="text" name="password" id="password" required>
+                </div>
+                <button type="submit" class="button-default">entrar</button>
+                <p>Não possui conta? <a href="register.html">Cadastre-se</a>.</p>
+            </form>
+        </div>
+    </main>
+
+    <script src="static/js/login.js"></script>
+</body>
+</html>

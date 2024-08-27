@@ -1,0 +1,15 @@
+/* scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--third-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--main-green), var(--main-cyan));
+    border-radius: 10px;
+    border: 2px solid var(--third-gray);
+}

@@ -1,0 +1,55 @@
+/* [reset] */
+* {
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Karla', sans-serif;
+    font-weight: 400;
+}
+
+/* global */
+html, body {
+    height: 100%;
+
+    overflow: hidden;
+    background: var(--main-black);    
+}
+
+main {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#logo {
+    padding: 30px;
+
+    font-size: 40px;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+
+    background: linear-gradient(90deg, var(--main-green), var(--main-cyan));
+    background-clip: text;
+    color: transparent;
+}
+
+/* container */
+.container {
+    flex: 1;
+    margin: 0 100px 0 200px;
+    border: 2px solid var(--main-green);
+    border-bottom: none;
+    border-radius: 60px 60px 0 0;
+    padding: 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.container h1 {
+    font-size: 25px;
+    letter-spacing: 5px;
+    color: var(--main-white);
+}

@@ -1,0 +1,90 @@
+/* buttons */
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button-score {
+    width: auto;
+    height: 30px;
+
+    padding: 0 15px;
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12.5px;
+    font-weight: 900;
+
+    border: none;
+    outline: none;
+}
+
+.button-score.danger {
+    background-color: #E82C2C;
+    color: #F37474;
+}
+
+.button-score.medium {
+    background-color: #FF961B;
+    color: #FFBF75;
+}
+
+.button-score.safe {
+    background-color: #2093D3;
+    color: #75CDFF;
+}
+
+.button-more-info {
+    cursor: pointer;
+
+    width: auto;
+    height: 30px;
+    
+    padding: 0 40px;
+    border-radius: 15px;
+
+    border: none;
+    outline: none;
+
+    background-color: var(--third-gray);
+
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--main-white);
+    letter-spacing: 1px;
+
+    transition: 0.3s;
+}
+
+.button-more-info:hover {
+    color: var(--main-black);
+    background-color: var(--main-cyan);
+
+    transition: 0.3s;
+}
+
+.button-default {
+    cursor: pointer;
+
+    width: 200px; height: 30px;
+    border-radius: 60px;
+
+    font-size: 15px; 
+    font-weight: 800;
+    color: var(--main-black);
+
+    background: linear-gradient(to right, var(--main-green), var(--main-cyan));
+    border: none;
+    outline: none;
+
+    transition: 0.4s;
+}
+
+.button-default:hover {
+    scale: 1.05;
+    
+    transition: 0.4s;
+}

@@ -1,0 +1,58 @@
+/* onboarding */
+
+.onboarding {
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 100px;
+}
+
+#onboarding-illustration {
+    max-width: 100%;
+    width: 350px;
+}
+
+.onboarding-content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 50px;
+}
+
+.onboarding-content span {
+    font-size: 40px;
+    font-weight: 400;
+    text-align: center;
+
+    color: var(--main-white);
+}
+
+.onboarding-content button {
+    cursor: pointer;
+
+    width: 300px; height: 85px;
+    border-radius: 60px;
+
+    font-size: 30px; 
+    font-weight: 800;
+    color: var(--main-black);
+
+    background: linear-gradient(to right, var(--main-green), var(--main-cyan));
+    border: none;
+    outline: none;
+
+    transition: 0.4s;
+}
+
+.onboarding-content button:hover {
+    scale: 1.05;
+
+    transition: 0.4s;
+}
