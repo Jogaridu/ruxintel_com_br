@@ -1,12 +1,17 @@
 const app = require("./app");
 const mongoose = require('mongoose');
+require("dotenv").config()
 
 const PORT = process.env.PORT || 3333;
+const USER = process.env.USER_DB;
+const PASSWD = process.env.PASSWORD_DB;
+const CLUSTER = process.env.CLUSTER_DB;
 
 app.listen(PORT, () => {
     console.log("Servidor rodando na porta " + PORT);
+    uri = `mongodb+srv://${USER}:${PASSWD}@${CLUSTER}/ruxintel_com_br?authMechanism=DEFAULT`;
 
-    mongoose.connect('mongodb://localhost:27017/ruxintel_com_br', {
+    mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });

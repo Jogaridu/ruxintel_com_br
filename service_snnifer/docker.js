@@ -74,9 +74,9 @@ module.exports = {
 // avaliar para nao buildar toda vez, talvez de pra usar uma imagem apenas - CONCLUIDO
 // caso não, alterar o status e encerrar a sessão do qrcode do usuario no front - CONCLUIDO
 // melhorar trativas de erro nas apis - CONCLUIDO
+// testar com mais um usuario simultaneo - CONCLUIDO
 
 // PRÓXIMAS ATIVIDADES
-// testar com mais um usuario simultaneo
 // salvar dados extras de midia
 // hospedar na aws
 
