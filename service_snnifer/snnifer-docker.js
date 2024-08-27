@@ -11,15 +11,17 @@ function initSnnifer() {
 
     const client = new Client({
         qrMaxRetries: 20,
-        authTimeout: 240000
+        authTimeout: 240000,
+        puppeteer: {
+            headless: true,
+            args: [
+                '--no-sandbox',
+            ],
+        }
     });
 
     client.on('qr', async (qr) => {
         try {
-            // links: [ { link: 'http://fancycoffee.fr', isSuspicious: false } ]
-            // filehash: '1rl7nn6wQzQDR5qCK0RDL094P+m4zuQDmEFPsDOCDrI=',
-            // encFilehash: '+w9Db2vgzOc05C1k8IKFIOD9J5jT3lpFHYmfvrNEGKM=',
-            // size: 139213,
             if (qr != '') {
                 await axios.post(`${URL_SERVICE_CRUD}/usuario/${id}/inserir-qrcode`, {
                     tokenQrcode: qr
@@ -30,6 +32,26 @@ function initSnnifer() {
         } catch (err) {
             console.log("[DEBUG] EVENT QR - Falha ao salvar o QRCODE");
         }
+    });
+
+    client.on('authenticated', () => {
+        console.log('Autenticado com sucesso.');
+    });
+
+    client.on('auth_failure', msg => {
+        console.error('Falha na autenticação:', msg);
+    });
+
+    client.on('error', (error) => {
+        console.error('Erro no cliente:', error);
+    });
+
+    client.on('loading_screen', (percent, message) => {
+        console.log(`[DEBUG] Carregando: ${percent}% - ${message}`);
+    });
+
+    client.on('change_state', state => {
+        console.log(`[DEBUG] Estado alterado: ${state}`);
     });
 
     client.on('ready', async () => {
@@ -45,6 +67,7 @@ function initSnnifer() {
         console.log('[DEBUG] Cliente se DESCONECTOU ao \"Cliente Personalizado\".');
         try {
             await axios.post(`${URL_SERVICE_CRUD}/usuario/${id}/encerrar-instancia`);
+            process.exit(0);
         } catch (error) {
             console.log("[DEBUG] EVENT DISCONNECTED - Falha ao encerrar a sessão o usuário");
         }

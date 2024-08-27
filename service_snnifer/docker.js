@@ -13,11 +13,12 @@ module.exports = {
         const name = generateNameContainer(userId);
 
         try {
+            console.log('Construindo imagem...');
 
             const stream = await docker.buildImage({
                 context: __dirname,
                 src: ['Dockerfile', 'snnifer-docker.js', 'package.json']
-            }, { t: 'image_docker_snnifer2' });
+            }, { t: 'image_docker_snnifer' });
 
             await new Promise((resolve, reject) => {
                 docker.modem.followProgress(stream, (err, res) => err ? reject(err) : resolve(res));
@@ -26,17 +27,20 @@ module.exports = {
             console.log('Imagem construída com sucesso.');
 
             const images = await docker.listImages();
-            const imageExists = images.some(image => image.RepoTags.includes('image_docker_snnifer2:latest'));
+            const imageExists = images.some(image => image.RepoTags.includes('image_docker_snnifer:latest'));
 
             if (!imageExists) {
                 throw new Error('Imagem não encontrada após a construção.');
             }
 
             const container = await docker.createContainer({
-                Image: 'image_docker_snnifer2',
+                Image: 'image_docker_snnifer',
                 name,
                 Env: [`USER_ID=${userId}`],
                 Tty: true,
+                HostConfig: {
+                    NetworkMode: 'host'
+                }
             });
 
             await container.start();

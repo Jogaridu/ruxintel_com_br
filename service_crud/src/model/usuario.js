@@ -28,7 +28,6 @@ const contactSchema = new Schema({
 
 // Definir o esquema de usuário
 const userSchema = new Schema({
-    id: { type: Number, required: false, unique: true },
     phone: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -36,11 +35,17 @@ const userSchema = new Schema({
     contacts: { type: Map, of: contactSchema },
     terms: { type: Boolean },
     statusInstance: { type: Boolean, required: false },
-    messagesCritical: [messageSchema]
-}, {
-    timestamps: {
-        currentTime: () => moment().tz('America/Sao_Paulo').format()
+    messagesCritical: [messageSchema],
+    createdAt: {
+        type: Date,
+        default: () => moment().tz('America/Sao_Paulo').toDate()
+    },
+    updatedAt: {
+        type: Date,
+        default: () => moment().tz('America/Sao_Paulo').toDate()
     }
+}, {
+    timestamps: true
 });
 
 

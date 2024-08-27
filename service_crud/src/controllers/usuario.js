@@ -109,7 +109,6 @@ module.exports = {
             if (mensagem.score >= 6) {
                 updateConfig.$push.messagesCritical = mensagem;
             }
-            console.log(mensagem);
 
             const usuario = await Usuarios.findOneAndUpdate(
                 { _id: id },
