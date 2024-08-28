@@ -2,6 +2,8 @@
 const token = checkSessionToken();
 const qrcodeContainer = document.querySelector(".qrcode-container");
 
+var interval;
+
 function iniciarSnnifer() {
     fetch("http://127.0.0.1:5555/iniciar-snnifer", {
         method: 'POST',
@@ -10,27 +12,56 @@ function iniciarSnnifer() {
         }
     })
 
-    setInterval(() => {
-        var qrcode = verificarQrcode();
+    interval = setInterval(() => {
+        verificarQrcode();
         
-        qrcodeContainer.innerHTML = `<img src="${qrcode}" alt="">`
     }, 10000)
 }
 
 function verificarQrcode() {
     fetch("http://127.0.0.1:5555/validar-container", {
-        method: 'POST',
+        method: 'GET',
         headers: {
             "Authorization":`Bearer ${token}`
         }
-        .then(response => response.json())
-        .then(data => {
-            if (data.data.status === "AGUARDANDO CONEXÃO") {
-                // qrcode existe
-                return data.data.imagem
-            }
-        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.data.status === "AGUARDANDO CONEXÃO") {
+            // qrcode existe
+            clearInterval(interval)
+
+            interval = setInterval(() => {
+                verificarConexao()    
+            }, 2500)
+
+            return qrcodeContainer.innerHTML = `<img src="${data.data.imagem}" alt="">`
+        } else if (data.data.status === "ATIVA") {
+            clearInterval(interval)
+            
+            alert("Conexão estabelecida com sucesso")
+            window.location.href = "/public/dashboard.html";
+        }
     })
 }
 
-await iniciarSnnifer()
+function verificarConexao() {
+    fetch("http://127.0.0.1:5555/validar-container", {
+        method: 'GET',
+        headers: {
+            "Authorization":`Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.data.status === "ATIVA") {
+            // identificou a conexao
+            clearInterval(interval)
+            
+            alert("Conexão estabelecida com sucesso")
+            window.location.href = "/public/dashboard.html";
+        }
+    })
+}
+
+iniciarSnnifer()

@@ -2,8 +2,8 @@ const { Client } = require('whatsapp-web.js');
 
 const axios = require('axios');
 
-const URL_SERVICE_CRUD = 'http://192.168.0.21:3333';
-const URL_SERVICE_INTELLIGENCE = 'http://192.168.0.21:4444';
+const URL_SERVICE_CRUD = 'http://192.168.0.91:3333';
+const URL_SERVICE_INTELLIGENCE = 'http://192.168.0.91:4444';
 
 function initSnnifer() {
 
