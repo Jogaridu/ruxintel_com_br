@@ -16,8 +16,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
+    <style>
+        div:where(.swal2-container) div:where(.swal2-popup) {
+            border-radius: 15px;
+            background: var(--main-black);
+            color: var(--main-white);
+            border: 2px solid var(--main-green);
+        }
+        
+        div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
+            background-color: transparent;
+            background: linear-gradient(to right, var(--main-green), var(--main-cyan));
+            color: var(--main-black);
+            font-weight: 600;
+            transition: 0.4s;
+        }
+
+        div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover {
+            background-image: none;
+            background: linear-gradient(to right, var(--main-green), var(--main-cyan));
+            scale: 1.15;
+            transition: 0.4s;
+        }
+    </style>
     <main class="login">
         <div class="banner">
             <p>Cadastre-se agora <br> proteja-se contra fraudes de forma <strong>direta</strong> e <strong>eficaz</strong>!.</p>
@@ -44,5 +68,6 @@
     </main>
 
     <script src="static/js/register.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
 </body>
 </html>

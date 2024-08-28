@@ -17,9 +17,17 @@ const form = document.querySelector(".login-form form").addEventListener("submit
     .then(response => response.json())
     .then(data => {
         if (data.status_code === 200) {
-            alert(data.message);
+            Swal.fire({
+                title: "Success!",
+                text: data.message,
+                icon: "success"
+            });
         } else {
-            alert(data.message);
+            Swal.fire({
+                title: "Register failed",
+                text: data.message,
+                icon: "error"
+            });
         }
     })
 })

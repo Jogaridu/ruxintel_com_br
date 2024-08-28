@@ -1,11 +1,7 @@
-// utilizar alguma logica para entender se o usuário já passou pelo processo de onboarding, caso não encaminhar ele para o onboarding (ja que as informações que a gente vai consumir só vão estar disponíveis caso o usuário ja tenha configurado o whats)
-
-
-// logica dos cards
-const cards = document.querySelector(".cards");
-const cardElements = cards.querySelectorAll(".card");
-
-if (cardElements.lenght == 0) {
-    // logica caso nao tenha nenhuma notificação
-    alert("sem mensagens");
-}
+Swal.fire({
+    position: "bottom-end",
+    icon: "info",
+    title: "Bem vindo ao Painel!",
+    showConfirmButton: false,
+    timer: 1750
+});

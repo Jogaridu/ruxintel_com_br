@@ -35,8 +35,11 @@ var form = document.getElementById("loginForm").addEventListener("submit", (even
                 }
             })
         } else {
-            // caso o usuário/senha esteja incorreto => retornar erro
-            alert('Login failed: ' + data.erro);
+            Swal.fire({
+                title: "Login failed",
+                text: data.erro,
+                icon: "error"
+            });
         }
     })
 })

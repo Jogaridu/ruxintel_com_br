@@ -12,6 +12,15 @@ function iniciarSnnifer() {
         }
     })
 
+    Swal.fire({
+        position: "top-end",
+        icon: "warning",
+        title: "Quase lá...",
+        text: "Aguarde enquanto geramos o seu código de entrada!",
+        showConfirmButton: false,
+        timer: 3500
+    });
+
     interval = setInterval(() => {
         verificarQrcode();
         
@@ -28,7 +37,6 @@ function verificarQrcode() {
     .then(response => response.json())
     .then(data => {
         if (data.data.status === "AGUARDANDO CONEXÃO") {
-            // qrcode existe
             clearInterval(interval)
 
             interval = setInterval(() => {
@@ -37,10 +45,7 @@ function verificarQrcode() {
 
             return qrcodeContainer.innerHTML = `<img src="${data.data.imagem}" alt="">`
         } else if (data.data.status === "ATIVA") {
-            clearInterval(interval)
-            
-            alert("Conexão estabelecida com sucesso")
-            window.location.href = "/public/dashboard.html";
+            encaminharDashboard(interval)
         }
     })
 }
@@ -55,13 +60,25 @@ function verificarConexao() {
     .then(response => response.json())
     .then(data => {
         if (data.data.status === "ATIVA") {
-            // identificou a conexao
-            clearInterval(interval)
-            
-            alert("Conexão estabelecida com sucesso")
-            window.location.href = "/public/dashboard.html";
+            encaminharDashboard(interval)
         }
     })
+}
+
+function encaminharDashboard(interval) {
+    clearInterval(interval)
+            
+    Swal.fire({
+        position: "bottom-end",
+        icon: "success",
+        title: "Dispositivo conectado!",
+        showConfirmButton: false,
+        timer: 2000
+    });
+
+    setTimeout(() => {
+        window.location.href = "/public/dashboard.html";
+    }, 2500);
 }
 
 iniciarSnnifer()

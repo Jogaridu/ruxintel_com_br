@@ -18,9 +18,37 @@
     <link rel="stylesheet" href="static/css/main.css">
     <link rel="stylesheet" href="static/css/connect.css">
     <link rel="stylesheet" href="static/css/components/navbar.css">
-    <link rel="stylesheet" href="static/css/components/button.css">    
+    <link rel="stylesheet" href="static/css/components/button.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"> 
 </head>
 <body>
+    <style>
+        div:where(.swal2-container) div:where(.swal2-popup) {
+            border-radius: 15px;
+            background: var(--main-black);
+            color: var(--main-white);
+            border: 2px solid var(--main-green);
+        }
+        
+        div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
+            background-color: transparent;
+            background: linear-gradient(to right, var(--main-green), var(--main-cyan));
+            color: var(--main-black);
+            font-weight: 600;
+            transition: 0.4s;
+        }
+
+        div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover {
+            background-image: none;
+            background: linear-gradient(to right, var(--main-green), var(--main-cyan));
+            scale: 1.15;
+            transition: 0.4s;
+        }
+
+        body.swal2-height-auto {
+            height: -webkit-fill-available !important;
+        }
+    </style>
     <!-- navbar -->
     <nav class="navbar">
         <ul>
@@ -63,7 +91,9 @@
         </div>
     </main>
 
+    <script src="static/js/exitButton.js"></script>
     <script src="static/js/validateSession.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
     <script src="static/js/connect.js"></script>
 </body>
 
