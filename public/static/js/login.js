@@ -16,12 +16,24 @@ var form = document.getElementById("loginForm").addEventListener("submit", (even
     })
     .then(response => response.json())
     .then(data => {
-        if (!data.erro === "Usuário ou senha incorreto.") {
-            // caso o usuário exista => setar o token de sessão
-            alert('Login successful!');
-
+        if (!data.erro) {
             document.cookie = `sessionToken=${data.token}`
-            window.location.href = '/public/dashboard.html';
+
+            // validar se o usuário já passou pelo onboarding
+            fetch("http://127.0.0.1:5555/validar-container", {
+                method: 'GET',
+                headers: {
+                    "Authorization":`Bearer ${data.token}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data.status === "ATIVA") {
+                    window.location.href = '/public/dashboard.html';
+                } else {
+                    window.location.href = '/public/onboarding.html';
+                }
+            })
         } else {
             // caso o usuário/senha esteja incorreto => retornar erro
             alert('Login failed: ' + data.erro);

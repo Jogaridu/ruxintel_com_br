@@ -1,5 +1,25 @@
-// pega as informações do formulario de login
+// pega as informações do formulario de registro
+const form = document.querySelector(".login-form form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    
+    const username = document.getElementById("username").value;
+    const phone = document.getElementById("phone").value;
+    const password = document.getElementById("password").value;
 
-// POST para o serviço CRUD, no endpoint /usuario
-
-// valida o status code de resposta e retorna a notificação para o usuario
+    // consulta no crud service
+    fetch("http://127.0.0.1:3333/usuario", {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({ password: password, username: username, phone: phone })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status_code === 200) {
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+    })
+})

@@ -183,7 +183,7 @@ module.exports = {
 
         if (!usuario.statusInstance) {
 
-            if (usuario.tokenQrcode != '' &&
+            if ((usuario.tokenQrcode ?? "" != '') &&
                 (new Date() - new Date(usuario.updatedAt)) / (1000 * 60) < tempoExpirarTokenQrcode) {
 
                 const base64 = await QRCode.toDataURL(usuario.tokenQrcode, {

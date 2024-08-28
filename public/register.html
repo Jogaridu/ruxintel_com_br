@@ -26,21 +26,23 @@
             <form action="">
                 <img src="static/img/logo.png" alt="">
                 <div class="login-form-input">
-                    <span><i class='bx bx-user'></i> Usuário</span>
-                    <input type="text">
+                    <label><i class='bx bx-user'></i> Usuário</label>
+                    <input type="text" id="username" required>
                 </div>
                 <div class="login-form-input">
-                    <span><i class='bx bxs-phone'></i> Telefone</span>
-                    <input type="tel">
+                    <label><i class='bx bxs-phone'></i> Telefone</label>
+                    <input type="tel"id="phone" required>
                 </div>
                 <div class="login-form-input">
-                    <span><i class='bx bxs-key'></i> Senha</span>
-                    <input type="text">
+                    <label><i class='bx bxs-key'></i> Senha</label>
+                    <input type="text" id="password" required>
                 </div>
                 <button class="button-default" type="submit">cadastrar</button>
                 <p>Já possui conta? <a href="index.html">Entrar</a>.</p>
             </form>
         </div>
     </main>
+
+    <script src="static/js/register.js"></script>
 </body>
 </html>

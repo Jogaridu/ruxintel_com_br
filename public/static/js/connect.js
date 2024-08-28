@@ -1,16 +1,36 @@
 // esperar até a instancia subir await /iniciar-snnifer
+const token = checkSessionToken();
+const qrcodeContainer = document.querySelector(".qrcode-container");
 
-// bater no endpoint /validar-container
-// var qrcode = base64
+function iniciarSnnifer() {
+    fetch("http://127.0.0.1:5555/iniciar-snnifer", {
+        method: 'POST',
+        headers: {
+            "Authorization":`Bearer ${token}`
+        }
+    })
 
-// devolve o base64 pro front
-// <img src=":base64">
+    setInterval(() => {
+        var qrcode = verificarQrcode();
+        
+        qrcodeContainer.innerHTML = `<img src="${qrcode}" alt="">`
+    }, 10000)
+}
 
-// bate no endpoint /validar-container até receber um "status":"ATIVA"
+function verificarQrcode() {
+    fetch("http://127.0.0.1:5555/validar-container", {
+        method: 'POST',
+        headers: {
+            "Authorization":`Bearer ${token}`
+        }
+        .then(response => response.json())
+        .then(data => {
+            if (data.data.status === "AGUARDANDO CONEXÃO") {
+                // qrcode existe
+                return data.data.imagem
+            }
+        })
+    })
+}
 
-
-function verificarQrcode() {}
-
-setInterval(() => {
-    verificarQrcode();
-}, 2500)
+await iniciarSnnifer()

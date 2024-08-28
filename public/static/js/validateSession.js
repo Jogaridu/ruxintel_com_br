@@ -1,10 +1,10 @@
 function checkSessionToken() {
     const token = getCookie('sessionToken');
 
-    if (!token) {
-        window.location.href = '/public/401.html';
+    if (!token || token.trim() === "") {
+        window.location.href = '/public/index.html';
     } else {
-        console.log('Token válido, acesso permitido.');
+        return token
     }
 }
 
@@ -21,5 +21,3 @@ function getCookie(name) {
 }
 
 window.onload = checkSessionToken;
-
-// NOTAS: da para fazer bypass setando um token sessionToken com qualquer valor, a aplicação não valida a autenticidade do token no backend
