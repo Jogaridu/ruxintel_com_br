@@ -6,6 +6,6 @@ checkbox.addEventListener("click", () => {
 })
 
 button.addEventListener("click", () => {
-    window.location.href = "/public/connect.html";
+    window.location.href = "connect.html";
     checkbox.checked = false;
 })

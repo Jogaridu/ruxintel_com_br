@@ -20,7 +20,7 @@ var form = document.getElementById("loginForm").addEventListener("submit", (even
             document.cookie = `sessionToken=${data.token}`
 
             // validar se o usuário já passou pelo onboarding
-            fetch("http://127.0.0.1:5555/validar-container", {
+            fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
                 method: 'GET',
                 headers: {
                     "Authorization":`Bearer ${data.token}`
@@ -29,9 +29,9 @@ var form = document.getElementById("loginForm").addEventListener("submit", (even
             .then(response => response.json())
             .then(data => {
                 if (data.data.status === "ATIVA") {
-                    window.location.href = '/public/dashboard.html';
+                    window.location.href = 'dashboard.html';
                 } else {
-                    window.location.href = '/public/onboarding.html';
+                    window.location.href = 'onboarding.html';
                 }
             })
         } else {

@@ -2,7 +2,7 @@ function checkSessionToken() {
     const token = getCookie('sessionToken');
 
     if (!token || token.trim() === "") {
-        window.location.href = '/public/index.html';
+        window.location.href = 'index.html';
     } else {
         return token
     }
