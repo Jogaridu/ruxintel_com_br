@@ -84,18 +84,63 @@ module.exports = {
             const mensagens = [];
 
             usuario.messagesCritical.forEach(item => {
-                mensagens.push({
-                    body: item.body,
-                    notifyName: item.notifyName,
-                    score: item.score,
-                    timestamp: convertTimestampToBRDateTime(item.timestamp)
-                });
+                if (!item.ignored) {
+                    mensagens.push({
+                        body: item.body,
+                        notifyName: item.notifyName,
+                        score: item.score,
+                        timestamp: convertTimestampToBRDateTime(item.timestamp)
+                    });
+                }
             });
 
             return res.status(200).send({
                 message: "Mensagens retornadas com sucesso",
                 status_code: 200,
                 data: { mensagens, numero_mensagens: mensagens.length }
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao buscar mensagens",
+                status_code: 404
+            });
+        }
+
+    },
+
+    async ignorarMensagem(req, res) {
+
+        try {
+
+            const usuario = await Usuarios.findById(req.id).select('_id messagesCritical');
+
+            if (!usuario) {
+                return res.status(404).send({
+                    message: "Usuário não encontrado",
+                    status_code: 404,
+                });
+            }
+
+            const { msg_id } = req.body;
+
+            usuario.messagesCritical = usuario.messagesCritical.map(item => {
+                if (item.id == msg_id) {
+                    item.ignored = true;
+                }
+                return item;
+            });
+
+            await Usuarios.findOneAndUpdate(
+                { _id: req.id },
+                { messagesCritical: usuario.messagesCritical },
+                { new: true, runValidators: true }
+            );
+
+            return res.status(200).send({
+                message: "Mensagens retornadas com sucesso",
+                status_code: 200,
             });
 
         } catch (error) {

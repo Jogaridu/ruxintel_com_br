@@ -1,73 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruxintel - Registro</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ruxintel - Registro</title>
 
-    <link rel="stylesheet" href="static/css/colors.css">
-    <link rel="stylesheet" href="static/css/components/button.css">
-    <link rel="stylesheet" href="static/css/login.css">
+        <link rel="stylesheet" href="static/css/colors.css" />
+        <link rel="stylesheet" href="static/css/components/button.css" />
+        <link rel="stylesheet" href="static/css/login.css" />
 
-    <link rel="icon" href="static/img/icon.png" type="image/x-icon">
+        <link rel="icon" href="static/img/icon.png" type="image/x-icon" />
 
-    <!-- fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet">
-</head>
-<body>
-    <style>
-        div:where(.swal2-container) div:where(.swal2-popup) {
-            border-radius: 15px;
-            background: var(--main-black);
-            color: var(--main-white);
-            border: 2px solid var(--main-green);
-        }
-        
-        div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
-            background-color: transparent;
-            background: linear-gradient(to right, var(--main-green), var(--main-cyan));
-            color: var(--main-black);
-            font-weight: 600;
-            transition: 0.4s;
-        }
+        <!-- fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <style>
+            div:where(.swal2-container) div:where(.swal2-popup) {
+                border-radius: 15px;
+                background: var(--main-black);
+                color: var(--main-white);
+                border: 2px solid var(--main-green);
+            }
 
-        div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover {
-            background-image: none;
-            background: linear-gradient(to right, var(--main-green), var(--main-cyan));
-            scale: 1.15;
-            transition: 0.4s;
-        }
-    </style>
-    <main class="login">
-        <div class="banner">
-            <p>Cadastre-se agora <br> proteja-se contra fraudes de forma <strong>direta</strong> e <strong>eficaz</strong>!.</p>
-        </div>
-        <div class="login-form">
-            <form action="">
-                <img src="static/img/logo.png" alt="">
-                <div class="login-form-input">
-                    <label><i class='bx bx-user'></i> Usuário</label>
-                    <input type="text" id="username" required>
-                </div>
-                <div class="login-form-input">
-                    <label><i class='bx bxs-phone'></i> Telefone</label>
-                    <input type="tel"id="phone" required>
-                </div>
-                <div class="login-form-input">
-                    <label><i class='bx bxs-key'></i> Senha</label>
-                    <input type="text" id="password" required>
-                </div>
-                <button class="button-default" type="submit">cadastrar</button>
-                <p>Já possui conta? <a href="index.html">Entrar</a>.</p>
-            </form>
-        </div>
-    </main>
+            div:where(.swal2-container)
+                button:where(.swal2-styled):where(.swal2-confirm) {
+                background-color: transparent;
+                background: linear-gradient(
+                    to right,
+                    var(--main-green),
+                    var(--main-cyan)
+                );
+                color: var(--main-black);
+                font-weight: 600;
+                transition: 0.4s;
+            }
 
-    <script src="static/js/register.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
-</body>
+            div:where(.swal2-container)
+                div:where(.swal2-actions):not(.swal2-loading)
+                .swal2-styled:hover {
+                background-image: none;
+                background: linear-gradient(
+                    to right,
+                    var(--main-green),
+                    var(--main-cyan)
+                );
+                scale: 1.15;
+                transition: 0.4s;
+            }
+        </style>
+        <main class="login">
+            <div class="banner">
+                <p>
+                    Cadastre-se agora <br />
+                    proteja-se contra fraudes de forma <strong>direta</strong> e
+                    <strong>eficaz</strong>!
+                </p>
+            </div>
+            <div class="login-form">
+                <form action="">
+                    <img src="static/img/logo.png" alt="" />
+                    <div class="login-form-input">
+                        <label><i class="bx bx-user"></i> Usuário</label>
+                        <input type="text" id="username" required />
+                    </div>
+                    <div class="login-form-input">
+                        <label><i class="bx bxs-phone"></i> Telefone</label>
+                        <input type="tel" id="phone" required />
+                    </div>
+                    <div class="login-form-input">
+                        <label><i class="bx bxs-key"></i> Senha</label>
+                        <input type="text" id="password" required />
+                    </div>
+                    <button class="button-default" type="submit">
+                        cadastrar
+                    </button>
+                    <p>Já possui conta? <a href="index.html">Entrar</a>.</p>
+                </form>
+            </div>
+        </main>
+
+        <script src="static/js/register.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+    </body>
 </html>
