@@ -186,7 +186,7 @@ module.exports = {
 
             await Usuarios.findOneAndUpdate(
                 { _id: id },
-                { tokenQrcode },
+                { tokenQrcode, statusInstance: false },
                 { new: true, runValidators: true }
             );
 
