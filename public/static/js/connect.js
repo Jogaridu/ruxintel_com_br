@@ -21,13 +21,14 @@ function iniciarSnnifer() {
         timer: 3500
     });
 
-    interval = setInterval(() => {
-        verificarQrcode();
+    validarContainer();
 
-    }, 10000)
+    interval = setInterval(() => {
+        validarContainer();
+    }, 10000);
 }
 
-function verificarQrcode() {
+function validarContainer() {
     fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
         method: 'GET',
         headers: {
@@ -37,29 +38,8 @@ function verificarQrcode() {
         .then(response => response.json())
         .then(data => {
             if (data.data.status === "AGUARDANDO CONEXÃO") {
-                clearInterval(interval)
-
-                interval = setInterval(() => {
-                    verificarConexao()
-                }, 2500)
-
                 return qrcodeContainer.innerHTML = `<img src="${data.data.imagem}" alt="">`
             } else if (data.data.status === "ATIVA") {
-                encaminharDashboard(interval)
-            }
-        })
-}
-
-function verificarConexao() {
-    fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
-        method: 'GET',
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.data.status === "ATIVA") {
                 encaminharDashboard(interval)
             }
         })
