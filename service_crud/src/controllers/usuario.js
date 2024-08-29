@@ -95,7 +95,7 @@ module.exports = {
             return res.status(200).send({
                 message: "Mensagens retornadas com sucesso",
                 status_code: 200,
-                data: { mensagens }
+                data: { mensagens, numero_mensagens: mensagens.length }
             });
 
         } catch (error) {
