@@ -51,7 +51,10 @@ module.exports = {
 
         } catch (error) {
 
-            if (error.statusCode === 409) {
+            const container = docker.getContainer(generateNameContainer(userId));
+            const data = await container.inspect();
+
+            if (error.statusCode === 409 && !data.State.Running) {
                 const existingContainer = docker.getContainer(name);
                 await existingContainer.restart();
             } else {
