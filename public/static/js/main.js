@@ -14,7 +14,7 @@ Swal.fire({
 function verificarMensagens() {
     var classeFinal;
 
-    fetch("http://127.0.0.1:3333/mensagens-criticas", {
+    fetch("https://ruxintel.r4topunk.xyz/service-crud/mensagens-criticas", {
         method: 'GET',
         headers: {
             "Authorization":`Bearer ${checkSessionToken()}`
@@ -78,7 +78,7 @@ function verificarMensagens() {
         })
     })
 
-    fetch("http://127.0.0.1:3333/mensagens-criticas", {
+    fetch("https://ruxintel.r4topunk.xyz/service-crud/mensagens-criticas", {
         method: 'GET',
         headers: {
             "Authorization":`Bearer ${checkSessionToken()}`
