@@ -3,12 +3,13 @@ const token = checkSessionToken();
 const qrcodeContainer = document.querySelector(".qrcode-container");
 
 var interval;
+var interval2;
 
 function iniciarSnnifer() {
     fetch("https://ruxintel.r4topunk.xyz/service-snnifer/iniciar-snnifer", {
         method: 'POST',
         headers: {
-            "Authorization":`Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         }
     })
 
@@ -23,7 +24,7 @@ function iniciarSnnifer() {
 
     interval = setInterval(() => {
         verificarQrcode();
-        
+
     }, 10000)
 }
 
@@ -31,43 +32,43 @@ function verificarQrcode() {
     fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
         method: 'GET',
         headers: {
-            "Authorization":`Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.data.status === "AGUARDANDO CONEXÃO") {
-            clearInterval(interval)
+        .then(response => response.json())
+        .then(data => {
+            if (data.data.status === "AGUARDANDO CONEXÃO") {
+                clearInterval(interval2)
 
-            interval = setInterval(() => {
-                verificarConexao()    
-            }, 2500)
+                interval2 = setInterval(() => {
+                    verificarConexao()
+                }, 2500)
 
-            return qrcodeContainer.innerHTML = `<img src="${data.data.imagem}" alt="">`
-        } else if (data.data.status === "ATIVA") {
-            encaminharDashboard(interval)
-        }
-    })
+                return qrcodeContainer.innerHTML = `<img src="${data.data.imagem}" alt="">`
+            } else if (data.data.status === "ATIVA") {
+                encaminharDashboard(interval)
+            }
+        })
 }
 
 function verificarConexao() {
     fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
         method: 'GET',
         headers: {
-            "Authorization":`Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.data.status === "ATIVA") {
-            encaminharDashboard(interval)
-        }
-    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.data.status === "ATIVA") {
+                encaminharDashboard(interval)
+            }
+        })
 }
 
 function encaminharDashboard(interval) {
     clearInterval(interval)
-            
+
     Swal.fire({
         position: "bottom-end",
         icon: "success",
