@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const auth = require("../config/auth.json");
 const Usuarios = require("../model/usuario");
 const QRCode = require('qrcode');
+const convertTimestampToBRDateTime = require("../utils/converterTimestamp");
 
 module.exports = {
 
@@ -59,13 +60,51 @@ module.exports = {
             });
 
         } catch (error) {
-            console.log(error);
             return res.status(404).send({
                 message: "Falha ao buscar o usuário",
                 status_code: 404
             });
+        }
 
-        };
+    },
+
+    async buscarMensagensCriticas(req, res) {
+
+        try {
+
+            const usuario = await Usuarios.findById(req.id).select('_id messagesCritical');
+
+            if (!usuario) {
+                return res.status(404).send({
+                    message: "Usuário não encontrado",
+                    status_code: 404,
+                });
+            }
+
+            const mensagens = [];
+
+            usuario.messagesCritical.forEach(item => {
+                mensagens.push({
+                    body: item.body,
+                    notifyName: item.notifyName,
+                    score: item.score,
+                    timestamp: convertTimestampToBRDateTime(item.timestamp)
+                });
+            });
+
+            return res.status(200).send({
+                message: "Mensagens retornadas com sucesso",
+                status_code: 200,
+                data: { mensagens }
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(404).send({
+                message: "Falha ao buscar mensagens",
+                status_code: 404
+            });
+        }
 
     },
 
@@ -157,7 +196,6 @@ module.exports = {
             });
 
         } catch (error) {
-            console.log(error);
             return res.status(404).send({
                 message: "Falha ao atualizar",
                 status_code: 404

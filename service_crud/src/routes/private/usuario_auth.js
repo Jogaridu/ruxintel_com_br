@@ -6,6 +6,6 @@ const autorizacaoMid = require("../../middlewares/autorizacao");
 
 const controller = require("../../controllers/usuario");
 
-// routes.get("/validar-instancia", autorizacaoMid, controller.validarInstancia);
+routes.get("/mensagens-criticas", autorizacaoMid, controller.buscarMensagensCriticas);
 
 module.exports = routes;
