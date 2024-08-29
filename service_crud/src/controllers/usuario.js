@@ -177,7 +177,8 @@ module.exports = {
                 "duration": message._data?.duration ?? null,
                 "hasMedia": message.hasMedia,
                 "deviceType": message.deviceType,
-                "score": message.fraudeScore
+                "score": message.fraudeScore,
+                "phone_number": remetente[0]
             };
 
             let updateConfig = {

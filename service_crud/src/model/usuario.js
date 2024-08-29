@@ -12,7 +12,8 @@ const messageSchema = new Schema({
     hasMedia: { type: Boolean, required: true },
     deviceType: { type: String, enum: ['web', 'android', 'ios'], required: true },
     score: { type: Number },
-    ignored: { type: Boolean, required: false, default: false }
+    ignored: { type: Boolean, required: false, default: false },
+    phone_number: { type: String, required: true },
 }, {
     _id: false
 });
