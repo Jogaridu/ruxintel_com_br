@@ -17,7 +17,8 @@ var form = document.getElementById("loginForm").addEventListener("submit", (even
     .then(response => response.json())
     .then(data => {
         if (!data.erro) {
-            document.cookie = `sessionToken=${data.token}`
+            document.cookie = `sessionToken=${data.token}`;
+            localStorage.setItem("sessionToken", data.token);
 
             // validar se o usuário já passou pelo onboarding
             fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
