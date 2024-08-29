@@ -102,7 +102,7 @@ function initSnnifer() {
             await axios.post(`${URL_SERVICE_CRUD}/usuario/${resposta.data.data.usuario._id}/mensagem`, { message: msg });
 
         } catch (error) {
-            console.log("[DEBUG] EVENT MESSAGE - Falha ao analisar mensagem recebida");
+            console.log("[DEBUG] EVENT MESSAGE - Falha ao analisar mensagem recebida: " + error);
         }
 
     }
