@@ -2,8 +2,9 @@ const { Client } = require('whatsapp-web.js');
 
 const axios = require('axios');
 
-const URL_SERVICE_CRUD = 'http://192.168.0.91:3333';
-const URL_SERVICE_INTELLIGENCE = 'http://192.168.0.91:4444';
+require("dotenv").config();
+const URL_SERVICE_CRUD = process.env.URL_SERVICE_CRUD_DOCKER;
+const URL_SERVICE_INTELLIGENCE = process.env.URL_SERVICE_INTELLIGENCE_DOCKER;
 
 function initSnnifer() {
 

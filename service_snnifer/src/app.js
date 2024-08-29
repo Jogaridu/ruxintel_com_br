@@ -1,14 +1,21 @@
+require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const { initDocker, isContainerRunning } = require("./../docker");
 
-const URL_SERVICE_CRUD = 'http://localhost:3333';
+const ENV_SERVICE_CRUD = process.env.ENV_SERVICE_CRUD || 'http://localhost:3333';
 
 const app = express();
 
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 const routes = express.Router();
 
@@ -42,7 +49,7 @@ routes.get("/validar-container", autorizacaoMid, async (req, res) => {
 
         const containerRunning = await isContainerRunning(req.id);
 
-        const response = (await axios.get(`${URL_SERVICE_CRUD}/usuario/${userId}/validar-instancia`)).data;
+        const response = (await axios.get(`${ENV_SERVICE_CRUD}/usuario/${userId}/validar-instancia`)).data;
 
         let status = '';
         const statusInstance = response.data.statusInstance ?? false;
@@ -57,7 +64,7 @@ routes.get("/validar-container", autorizacaoMid, async (req, res) => {
 
         } else if (containerRunning == false && statusInstance) {
             // CONTAINER NEGATIVO MAS, BANCO ESTÁ POSITIVO
-            await axios.post(`${URL_SERVICE_CRUD}/usuario/${userId}/encerrar-instancia`);
+            await axios.post(`${ENV_SERVICE_CRUD}/usuario/${userId}/encerrar-instancia`);
             status = 'INATIVA';
 
         } else if (containerRunning && statusInstance == false) {
@@ -65,7 +72,7 @@ routes.get("/validar-container", autorizacaoMid, async (req, res) => {
             if (response.data.imagem ?? '' != '') {
                 status = 'AGUARDANDO CONEXÃO';
             } else {
-                await axios.post(`${URL_SERVICE_CRUD}/usuario/${userId}/iniciar-instancia`);
+                await axios.post(`${ENV_SERVICE_CRUD}/usuario/${userId}/iniciar-instancia`);
                 status = 'ATIVA';
             }
         } else {

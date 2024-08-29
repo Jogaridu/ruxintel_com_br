@@ -2,6 +2,10 @@ const Docker = require('dockerode');
 
 const docker = new Docker({ host: 'http://localhost', port: 2375 });
 
+require("dotenv").config();
+const URL_SERVICE_CRUD_DOCKER = process.env.URL_SERVICE_CRUD_DOCKER;
+const URL_SERVICE_INTELLIGENCE_DOCKER = process.env.URL_SERVICE_INTELLIGENCE_DOCKER;
+
 function generateNameContainer(userId) {
     return `U${userId}`
 }
@@ -36,7 +40,7 @@ module.exports = {
             const container = await docker.createContainer({
                 Image: 'image_docker_snnifer',
                 name,
-                Env: [`USER_ID=${userId}`],
+                Env: [`USER_ID=${userId}`, `URL_SERVICE_CRUD_DOCKER=${URL_SERVICE_CRUD_DOCKER}`, `URL_SERVICE_INTELLIGENCE_DOCKER=${URL_SERVICE_INTELLIGENCE_DOCKER}`],
                 Tty: true,
                 HostConfig: {
                     NetworkMode: 'host'
@@ -67,17 +71,3 @@ module.exports = {
         }
     }
 }
-
-// fazer lógica com docker - CONCLUIDO
-// integrar arquivo docker com API oficial - CONCLUIDO
-// melhorar "validar instancia" para validar se o container está de pé - CONCLUIDO
-// avaliar para nao buildar toda vez, talvez de pra usar uma imagem apenas - CONCLUIDO
-// caso não, alterar o status e encerrar a sessão do qrcode do usuario no front - CONCLUIDO
-// melhorar trativas de erro nas apis - CONCLUIDO
-// testar com mais um usuario simultaneo - CONCLUIDO
-
-// PRÓXIMAS ATIVIDADES
-// salvar dados extras de midia
-// hospedar na aws
-
-
