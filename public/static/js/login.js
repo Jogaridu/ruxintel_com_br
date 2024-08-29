@@ -7,7 +7,7 @@ var form = document.getElementById("loginForm").addEventListener("submit", (even
     const password = document.getElementById("password").value;
     
     // consulta no crud service
-    fetch("https://r4topunk.xyz/service-crud/login", {
+    fetch("https://ruxintel.r4topunk.xyz/service-crud/login", {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
