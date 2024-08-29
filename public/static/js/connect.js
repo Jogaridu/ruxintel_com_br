@@ -3,7 +3,6 @@ const token = checkSessionToken();
 const qrcodeContainer = document.querySelector(".qrcode-container");
 
 var interval;
-var interval2;
 
 function iniciarSnnifer() {
     fetch("https://ruxintel.r4topunk.xyz/service-snnifer/iniciar-snnifer", {
@@ -38,9 +37,9 @@ function verificarQrcode() {
         .then(response => response.json())
         .then(data => {
             if (data.data.status === "AGUARDANDO CONEXÃO") {
-                clearInterval(interval2)
+                clearInterval(interval)
 
-                interval2 = setInterval(() => {
+                interval = setInterval(() => {
                     verificarConexao()
                 }, 2500)
 
