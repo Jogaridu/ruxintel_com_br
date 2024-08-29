@@ -10,15 +10,14 @@
 }
 
 .qrcode-container {
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
 
     background-color: var(--main-gray);
-    border: 6px solid var(--main-green);
 }
 
 .qrcode-container img {
-    max-width: 100%;
+    width: 100%;
 }
 
 .connect ul {
