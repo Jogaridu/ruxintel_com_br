@@ -10,14 +10,7 @@
 }
 
 .qrcode-container {
-    width: 400px;
-    height: 400px;
-
-    background-color: var(--main-gray);
-}
-
-.qrcode-container img {
-    width: 100%;
+    /* background-color: var(--main-gray); */
 }
 
 .connect ul {

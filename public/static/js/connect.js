@@ -21,11 +21,11 @@ function iniciarSnnifer() {
         timer: 3500
     });
 
-    validarContainer();
-
-    interval = setInterval(() => {
-        validarContainer();
-    }, 10000);
+    setTimeout(() => {
+        interval = setInterval(() => {
+            validarContainer();
+        }, 10000);
+    }, 4000);
 }
 
 function validarContainer() {
@@ -38,7 +38,7 @@ function validarContainer() {
         .then(response => response.json())
         .then(data => {
             if (data.data.status === "AGUARDANDO CONEXÃO") {
-                return qrcodeContainer.innerHTML = `<img src="${data.data.imagem}" alt="">`
+                qrcodeContainer.innerHTML = `<img src="${data.data.imagem}" alt="">`
             } else if (data.data.status === "ATIVA") {
                 encaminharDashboard(interval)
             }
@@ -61,4 +61,4 @@ function encaminharDashboard(interval) {
     }, 2500);
 }
 
-iniciarSnnifer()
+// iniciarSnnifer()
