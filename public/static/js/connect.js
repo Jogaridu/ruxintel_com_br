@@ -61,4 +61,4 @@ function encaminharDashboard(interval) {
     }, 2500);
 }
 
-// iniciarSnnifer()
+iniciarSnnifer()
