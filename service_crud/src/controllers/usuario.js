@@ -5,6 +5,7 @@ const auth = require("../config/auth.json");
 const Usuarios = require("../model/usuario");
 const QRCode = require('qrcode');
 const convertTimestampToBRDateTime = require("../utils/converterTimestamp");
+const BlockList = require("../model/blocklist");
 
 module.exports = {
 
@@ -193,6 +194,13 @@ module.exports = {
 
             if (mensagem.score >= 6) {
                 updateConfig.$push.messagesCritical = mensagem;
+
+                const result = await BlockList.findOneAndUpdate(
+                    { phone: remetente[0] },
+                    { $inc: { countReports: 1 } },
+                    { new: true, upsert: true }
+                );
+
             }
 
             const usuario = await Usuarios.findOneAndUpdate(

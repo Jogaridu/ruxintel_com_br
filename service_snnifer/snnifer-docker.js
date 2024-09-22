@@ -91,10 +91,6 @@ function initSnnifer() {
             // Envio de mensagem para análise de inteligência
             const resposta_inteligencia = await axios.post(`${URL_SERVICE_INTELLIGENCE}/analise-mensagem`, dados_analise);
 
-            if (resposta_inteligencia.data.status_code != 200) {
-                //TODO: Avaliar lógica para disparar aviso caso a inteligência não funcione
-            }
-
             // Salvando dados do SCORE
             msg.fraudeScore = resposta_inteligencia.data.data.fraudeScore;
             msg.fraudePorcentagem = resposta_inteligencia.data.data.fraudePorcentagem;
@@ -108,7 +104,6 @@ function initSnnifer() {
 
     }
 
-    // Só pega as mensagens recebidas
     client.on('message', msg => snniferMensagens(msg));
 
     client.initialize();
