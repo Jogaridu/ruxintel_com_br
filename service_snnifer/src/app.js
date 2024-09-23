@@ -72,8 +72,7 @@ routes.get("/validar-container", autorizacaoMid, async (req, res) => {
             if (response.data.imagem ?? '' != '') {
                 status = 'AGUARDANDO CONEXÃO';
             } else {
-                await axios.post(`${ENV_SERVICE_CRUD}/usuario/${userId}/iniciar-instancia`);
-                status = 'ATIVA';
+                status = 'AGUARDANDO CONEXÃO2';
             }
         } else {
             status = 'ATIVA';
