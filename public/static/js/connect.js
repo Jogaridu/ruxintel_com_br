@@ -24,7 +24,7 @@ function iniciarSnnifer() {
     setTimeout(() => {
         interval = setInterval(() => {
             validarContainer();
-        }, 10000);
+        }, 3000);
     }, 4000);
 }
 

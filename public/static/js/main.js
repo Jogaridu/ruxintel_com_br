@@ -100,23 +100,33 @@ function verificarMensagens() {
         })
 }
 
-// function validarContainer() {
-//     fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
-//         method: 'GET',
-//         headers: {
-//             "Authorization": `Bearer ${token}`
-//         }
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.data.status === "INATIVA") {
-//                 encaminharDashboard(interval)
-//             }
-//         })
-// }
+function validarContainer() {
+
+    fetch("https://ruxintel.r4topunk.xyz/service-snnifer/validar-container", {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${checkSessionToken()}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (['AGUARDANDO CONEXÃO', 'INATIVA'].includes(data.data.status)) {
+                document.getElementById('desconectado').style.display = 'flex';
+            }
+        })
+}
+
+function deslogar() {
+    document.cookie = 'sessionToken=; path=/;';
+    localStorage.removeItem("sessionToken");
+    location.href = 'index.html'
+}
 
 setInterval(() => {
     verificarMensagens()
+    validarContainer()
 }, 20000)
 
 verificarMensagens()
+validarContainer()

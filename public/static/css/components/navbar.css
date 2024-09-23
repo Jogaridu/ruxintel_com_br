@@ -36,7 +36,7 @@
 
 .navbar ul li {
     cursor: pointer;
-
+    color: var(--second-gray);
     display: flex;
     flex-direction: column;
     align-items: center;
