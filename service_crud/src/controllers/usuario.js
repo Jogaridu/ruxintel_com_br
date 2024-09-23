@@ -271,7 +271,7 @@ module.exports = {
         }
 
         // minutos
-        const tempoExpirarTokenQrcode = 20;
+        const tempoExpirarTokenQrcode = 5;
 
         if (!usuario.statusInstance) {
 
@@ -313,7 +313,7 @@ module.exports = {
 
             await Usuarios.findOneAndUpdate(
                 { _id: id },
-                { statusInstance: true },
+                { statusInstance: true, tokenQrcode: '' },
                 { new: true, runValidators: true }
             );
 
