@@ -1,7 +1,7 @@
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const auth = require("../config/auth.json");
+const auth = require("../config/auth");
 const Usuarios = require("../model/usuario");
 const QRCode = require('qrcode');
 const convertTimestampToBRDateTime = require("../utils/converterTimestamp");
