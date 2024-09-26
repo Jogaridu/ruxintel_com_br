@@ -55,4 +55,34 @@ module.exports = {
 
     },
 
+    async buscarPorTelefone(req, res) {
+
+        const { phone } = req.params;
+
+        try {
+
+            const dados = await BlockList.find({ phone }).select('_id phone countReports');
+
+            if (!dados) {
+                return res.status(404).send({
+                    message: "Registro não encontrado",
+                    status_code: 404,
+                });
+            }
+
+            return res.status(200).send({
+                message: "Registros retornados com sucesso",
+                status_code: 200,
+                data: { dados }
+            });
+
+        } catch (error) {
+            return res.status(404).send({
+                message: "Falha ao buscar o usuário",
+                status_code: 404
+            });
+        }
+
+    },
+
 }
